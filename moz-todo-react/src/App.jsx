@@ -1,37 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Todo from "./components/Todo";
+import Form from "./components/Form";
+import FilterButton from "./components/FilterButton";
+import { useState } from "react";
+import { nanoid } from "nanoid";
 
 function App(props) {
-  // prop - passes data into react component
-  // only passed form parent to child
-  console.log(props);
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState(props.tasks);
+  const taskList = tasks?.map((task) => <Todo id={ task.id } name={ task.name } completed={ task.completed } key={ task.id } toggleTaskCompleted={ toggleTaskCompleted } />);
+  const buttonList = props.buttons?.map((holds) => <FilterButton id={ holds.id } name={ holds.name } key={ holds.id } />)
+  const taskListNum = taskList.length
+  const taskNoun = taskListNum !== 1 ? "tasks" : "task";
 
+  function addTask(name) {
+    const newTask = { id: `todo-${nanoid()}`, name, completed: false };
+    setTasks([...tasks, newTask]);
+    console.log([...tasks, newTask])
+    // alert(`Hello ${name}`);
+  }
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map((task) => {
+      if ( id === task.id ) {
+        return { ...task, completed: !task.completed }
+      }
+      return task;
+    });
+    setTasks(updatedTasks)
+  }
+  
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="todoapp stack-large">
+      <h1>TodoMatic</h1>
+      <Form addTask={ addTask } />
+      <div className="filters btn-group stack-exception"> 
+        { buttonList }
       </div>
-      <h1>Chris + Vite + React === Besties</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        
-      </div>
-      
-      <button onClick={(e) => {
-          e.currentTarget.textContent = "I'm clicked!"
-        }} >{ props.subject.toUpperCase() } Me!</button>
-    </>
-  )
+      <h2 id="list-heading">{ taskListNum } { taskNoun } remaining</h2>
+      <ul
+        role="list"
+        className="todo-list stack-large stack-exception"
+        aria-labelledby="list-heading">
+        { taskList }
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
