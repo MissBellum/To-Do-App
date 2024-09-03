@@ -9,15 +9,18 @@ const DATA = [
   { id: "todo-2", name: "Rinse", completed: true },
   { id: "todo-3", name: "Repeat", completed: false },
 ];
-const TOPBUTTONS = [
-  { id: "button-0", name: "All" },
-  { id: "button-1", name: "Active" },
-  { id: "button-2", name: "Achieved" },
-];
-
+// const TOPBUTTONS = [
+//   { id: "button-0", name: "All" },
+//   { id: "button-1", name: "Active" },
+//   { id: "button-2", name: "Achieved" },
+// ];
+// const names = DATA.map((todo) => todo.name);
+// console.log(names)
 // component - reusable module that renders part of app
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App subject="Crank" tasks={ DATA } buttons={ TOPBUTTONS } />
+    {/* buttons={ TOPBUTTONS } */}
+    <App subject="Crank" tasks={ DATA } /> 
+    {/* <Form names={ names } /> */}
   </StrictMode>,
 )

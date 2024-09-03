@@ -5,11 +5,29 @@ function Form(props) {
     function handleChange(e) {
         setName(e.target.value);
     }
+    function toTitleCase(str) {
+        return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
     function handleSubmit(e) {
         e.preventDefault();
-        props.addTask(name.toUpperCase());
-        setName("")
+        // titleCase name
+        const titleName = name.trim()
+        if ( titleName === "" ) {
+            alert("Please type in a task teinksss");
+            return;
+        }
+        // const nameExists = props.names.some((n) => n.toLowerCase() === name.toLowerCase());
+        const nameList = Object.values(props.names);
+        for ( const label of nameList ) {
+            if ( toTitleCase(label) === toTitleCase(titleName) ) {
+                alert(`${toTitleCase(titleName)} has been included, try another task diko`);
+                return;
+            }
+        }            
+        props.addTask(toTitleCase(name));
+        setName(""); 
     }
+    
     return (
         <form onSubmit={ handleSubmit }>
             <h2 className="label-wrapper">
