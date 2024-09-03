@@ -13,14 +13,14 @@ function Form(props) {
         // titleCase name
         const titleName = name.trim()
         if ( titleName === "" ) {
-            alert("Please type in a task teinksss");
+            alert("Please type in a task you need to complete");
             return;
         }
         // const nameExists = props.names.some((n) => n.toLowerCase() === name.toLowerCase());
         const nameList = Object.values(props.names);
         for ( const label of nameList ) {
             if ( toTitleCase(label) === toTitleCase(titleName) ) {
-                alert(`${toTitleCase(titleName)} has been included, try another task diko`);
+                alert(`${toTitleCase(titleName)} has already been included. Please try another task.`);
                 return;
             }
         }            
