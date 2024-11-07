@@ -6,6 +6,7 @@ function Todo(props) {
   const editFieldRef = useRef(null);
   const editButtonRef = useRef(null);
   const wasEditing = usePrevious(isEditing);
+  const [changeText, newString] = useState(`new name for ${ props.name }`);
   console.log(editButtonRef.current);
   console.log(wasEditing);
   console.log(isEditing);
@@ -27,9 +28,15 @@ function Todo(props) {
     setNewName("");
     setEditing(false);
   }  
+  function checkString(e, oldname) {
+    if ( props.name === "" ) {
+      e.preventDefault();
+      newString(`Please type a name for ${ oldname }`);
+    }
+  }
   
   const editingTemplate = (
-    <form className="stack-small" onSubmit={ handleSubmit }>
+    <form className="stack-small" onSubmit={ [handleSubmit, checkString] }>
       <div className="form-group">
         <label className="todo-label" htmlFor={props.id}>
           New name for {props.name}
@@ -43,7 +50,7 @@ function Todo(props) {
         </button>
         <button type="submit" className="btn btn__primary todo-edit">
           Save
-          <span className="visually-hidden">new name for {props.name}</span>
+          <span className="visually-hidden">{ changeText }</span>
         </button>
       </div>
     </form>
