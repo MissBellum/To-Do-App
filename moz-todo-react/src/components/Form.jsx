@@ -13,7 +13,7 @@ function Form(props) {
         // titleCase name
         const titleName = name.trim()
         if ( titleName === "" ) {
-            alert("Please type in a task you need to complete");
+            // alert("Please type in a task you need to complete");
             return;
         }
         // const nameExists = props.names.some((n) => n.toLowerCase() === name.toLowerCase());
@@ -44,7 +44,7 @@ function Form(props) {
                 value={ name }
                 onChange={ handleChange }
             />
-            <button type="submit" className="btn btn__primary btn__lg">
+            <button id="testButton" type="submit" className="btn btn__primary btn__lg">
                 Add
             </button>
         </form>
